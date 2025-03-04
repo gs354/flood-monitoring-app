@@ -6,8 +6,8 @@ A Python application for fetching and visualising flood monitoring data from the
 
 
 ```bash
-# Create and activate a virtual environment
-python -m venv .venv
+# Create and activate a virtual environment, e.g. on MacOs/Linux:
+python3 -m venv .venv
 source .venv/bin/activate
 
 # Clone and install the package
