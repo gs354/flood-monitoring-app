@@ -1,0 +1,6 @@
+[api]
+root_url = "https://environment.data.gov.uk/flood-monitoring/id/stations"
+
+[paths]
+station_ids = "data/station_ids.txt"
+plots = "plots" 
