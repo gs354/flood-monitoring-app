@@ -1,6 +1,6 @@
 # Flood Monitoring App
 
-A Python application for fetching and visualizing flood monitoring data from the UK Environment Agency's real-time API.
+A Python application for fetching and visualising flood monitoring data from the UK Environment Agency's real-time API.
 
 ## Installation
 
@@ -51,12 +51,6 @@ Before first use:
 1. Create the `data` directory for storing station IDs
 2. Create the `plots` directory for saving plot outputs
 3. Run with the `-u` flag to populate the station IDs file
-
-## Configuration      
-
-The application uses a configuration file to manage its behavior. The configuration file is located at `config/config.toml`.
-
-The configuration file contains the following options:
 
 
 ## Usage
