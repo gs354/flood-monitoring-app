@@ -70,19 +70,19 @@ It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/st
 Update station IDs and then display plot for station 2067 for the last day's data:
 
 ```bash
-flood-monitoring-app -s 2067 -u
+flood-monitor -s 2067 -u
 ```
 
 Display plot for station 2067 for the last day's data:
 
 ```bash
-flood-monitoring-app -s 2067
+flood-monitor -s 2067
 ```
 
 Save plot for station 2067 for the last 3 days' data:
 
 ```bash
-flood-monitoring-app -s 2067 --d 3 --save
+flood-monitor -s 2067 --d 3 --save
 ```
 
 
