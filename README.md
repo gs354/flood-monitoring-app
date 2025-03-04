@@ -22,7 +22,7 @@ pip install -e .
 
 For developers:
 ```bash
-pip install -e ".[dev]"  # Includes development dependencies
+pip install -e ".[dev]"  # Includes development dependencies. Required to run tests.
 ```
 
 ## Project Structure
@@ -62,7 +62,7 @@ It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/st
 
 ### On first use
 - Run with the `-u` flag to populate the station IDs file.
-- The app will create the `plots' and `data' directories if they don't exist.
+- The app will create the `plots` and `data` directories if they don't exist.
 
 
 ### Examples
