@@ -11,7 +11,7 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Clone and install the package
-git clone https://github.com/yourusername/flood-monitoring-app.git
+git clone https://github.com/gs354/flood-monitoring-app.git
 cd flood-monitoring-app
 ```
 
