@@ -56,7 +56,7 @@ Before first use:
 ## Usage
 
 The app provides a command-line interface to fetch and plot flood monitoring data. 
-It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/stations/{station_id}/readings` to fetch readings for all measures from a particular station up to a specified number of days ago.
+It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/stations/<station_id>/readings` to fetch readings for all measures from a particular station up to a specified number of days ago.
 
 ### Options
 
