@@ -46,6 +46,27 @@ def main(
 
 def run_cli() -> None:
     """Run the command-line interface."""
+
+    def positive_int(value: str) -> int:
+        """Convert string to positive integer.
+
+        Args:
+            value: String to convert
+
+        Returns:
+            Positive integer
+
+        Raises:
+            ArgumentTypeError: If value cannot be converted to a positive integer
+        """
+        try:
+            ivalue = int(value)
+            if ivalue <= 0:
+                raise ValueError
+            return ivalue
+        except ValueError:
+            raise argparse.ArgumentTypeError(f"{value} is not a positive integer")
+
     parser = argparse.ArgumentParser(
         description="Fetch and plot flood monitoring data for a given station."
     )
@@ -59,9 +80,9 @@ def run_cli() -> None:
     parser.add_argument(
         "--days-back",
         "-d",
-        type=int,
+        type=positive_int,
         default=1,
-        help="Number of days to look back",
+        help="Number of days to look back (must be positive)",
     )
     parser.add_argument(
         "--update-station-ids",
