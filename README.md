@@ -43,7 +43,7 @@ flood-monitoring-app/
 
 ## Configuration
 
-The application uses a TOML configuration file located at `config/config.toml`. This file contains:
+The app uses a TOML configuration file located at `config/config.toml`, which contains:
 - API endpoint root URL
 - Paths for a station IDs text file and the directory for saving plot images
 
@@ -55,7 +55,8 @@ Before first use:
 
 ## Usage
 
-The application provides a command-line interface to fetch and plot flood monitoring data:
+The app provides a command-line interface to fetch and plot flood monitoring data. 
+It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/stations/{station_id}/readings` to fetch readings for all measures from a particular station up to a specified number of days ago.
 
 ### Options
 
