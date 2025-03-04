@@ -47,11 +47,6 @@ The app uses a TOML configuration file located at `config/config.toml`, which co
 - API endpoint root URL
 - Paths for a station IDs text file and the directory for saving plot images
 
-Before first use:
-1. Create the `data` directory for storing station IDs
-2. Create the `plots` directory for saving plot outputs
-3. Run with the `-u` flag to populate the station IDs file
-
 
 ## Usage
 
@@ -64,6 +59,11 @@ It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/st
 - `-d, --days-back`: Number of days of data to fetch (default: 1)
 - `-u, --update-station-ids`: Update the station IDs file before processing
 - `-save, --save-not-display`: Save the plot instead of displaying it
+
+### On first use
+- Run with the `-u` flag to populate the station IDs file.
+- The app will create the `plots' and `data' directories if they don't exist.
+
 
 ### Examples
 
