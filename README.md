@@ -65,7 +65,7 @@ It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/st
 \* The limit on the number of items returned by the API is set in the config file to 1400. The corresponding number of days is set as one hundredth of this limit, i.e. 14. 
 
 ### On first use
-- Run with the `-u` flag to populate the station IDs file.
+- Run with the `-u` flag to create a station IDs file in the `data` directory.
 - The app will create the `plots` and `data` directories if they don't exist.
 
 
@@ -77,16 +77,16 @@ Update station IDs and then display plot for station 2067 for the last day's dat
 flood-monitor -s 2067 -u
 ```
 
-Display plot for station 2067 for the last day's data:
+Display plot for station 1491TH for the last three days' data:
 
 ```bash
-flood-monitor -s 2067
+flood-monitor -s 1491TH -d 3
 ```
 
-Save plot for station 2067 for the last 3 days' data:
+Save plot for station 2067 for the last day's data:
 
 ```bash
-flood-monitor -s 2067 --d 3 --save
+flood-monitor -s 2067 --save
 ```
 
 
