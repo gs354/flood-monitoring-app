@@ -40,7 +40,7 @@ flood-monitoring-app/
 ├── data/               # Data files (e.g. station IDs) *
 ├── plots/              # Generated plot files *
 └── tests/              
-    ├── test_api.py     # API  tests
+    ├── test_api.py     # API tests
     └── test_cli.py     # CLI tests
 ```
 
