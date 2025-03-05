@@ -5,19 +5,19 @@ from datetime import datetime, timedelta
 
 from .api import get_all_station_ids, get_request_json
 from .data import (
+    DATA_DIR,
+    N_LIMIT,
     PLOTS_DIR,
     ROOT_URL,
     STATION_IDS_FILE,
     extract_readings,
-    load_config,
     load_station_ids,
+    save_readings_to_csv,
     save_station_ids,
     validate_station_id,
 )
 from .plotting import plot_data
 
-CONFIG = load_config()
-N_LIMIT = CONFIG["api"]["returned_items_limit"]
 LOOKBACK_DAYS_LIMIT = int(N_LIMIT / 100)
 
 
@@ -26,6 +26,7 @@ def main(
     dt: int = 1,
     update_station_ids: bool = False,
     save_fig: bool = True,
+    save_csv: bool = False,
 ) -> None:
     """Main function to fetch and plot flood monitoring data."""
 
@@ -50,12 +51,21 @@ def main(
     # Extract datetime and value pairs for each measure from the readings
     measures_data = extract_readings(readings=readings)
 
+    # Save data to CSV files if requested
+    timestamp = time_now.strftime("%Y-%m-%dT%H:%M")
+    if save_csv:
+        save_readings_to_csv(
+            readings=measures_data,
+            output_dir=DATA_DIR / "readings",
+            station_id=station_id,
+            timestamp=timestamp,
+        )
+
     # Plot the data
     plot_data(
         data=measures_data,
         savefig=save_fig,
-        filepath=PLOTS_DIR
-        / f"station_{station_id}_{start_datetime[:16]}_{time_now.strftime('%Y-%m-%dT%H:%M')}.pdf",
+        filepath=PLOTS_DIR / f"station_{station_id}_{timestamp}.pdf",
     )
 
 
@@ -116,6 +126,12 @@ def run_cli() -> None:
         action="store_true",
         help="Save the plot instead of displaying it",
     )
+    parser.add_argument(
+        "--save-csv",
+        "-csv",
+        action="store_true",
+        help="Save the data to CSV files",
+    )
 
     args = parser.parse_args()
 
@@ -124,6 +140,7 @@ def run_cli() -> None:
         dt=args.days_back,
         update_station_ids=args.update_station_ids,
         save_fig=args.save_not_display,
+        save_csv=args.save_csv,
     )
 
 

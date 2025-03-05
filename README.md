@@ -37,7 +37,7 @@ flood-monitoring-app/
 │   └── plotting.py     # Plotting functions
 ├── config/
 │   └── config.toml     # Configuration settings
-├── data/               # Data files (e.g. station IDs) *
+├── data/               # Data files (e.g. station IDs) and CSV files of readings *
 ├── plots/              # Generated plot files *
 └── tests/              
     ├── test_api.py     # API tests
@@ -65,6 +65,7 @@ It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/st
 - `-d, --days-back`: Number of days of data to fetch (default: 1; allowed range: 1-14<sup>*</sup>)
 - `-u, --update-station-ids`: Update the station IDs file before processing
 - `-save, --save-not-display`: Save the plot instead of displaying it
+- `-csv, --save-csv`: Save the data to CSV files
 
 \* The limit on the number of items returned by the API is set in the config file to 1400. The corresponding number of days is set as one hundredth of this limit, i.e. 14. 
 
@@ -86,10 +87,10 @@ Display plot for station 1491TH for the last three days' data:
 flood-monitor -s 1491TH -d 3
 ```
 
-Save plot for station 2067 for the last day's data:
+Save plot and csv(s) for station 2067 for the last day's data:
 
 ```bash
-flood-monitor -s 2067 --save
+flood-monitor -s 2067 -save -csv
 ```
 
 

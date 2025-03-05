@@ -3,6 +3,7 @@
 from collections import defaultdict
 from pathlib import Path
 
+import pandas as pd
 import tomllib
 
 
@@ -19,6 +20,8 @@ ROOT_URL = CONFIG["api"]["root_url"]
 SCRIPT_DIR = Path(__file__).parent.parent.parent
 STATION_IDS_FILE = SCRIPT_DIR / CONFIG["paths"]["station_ids"]
 PLOTS_DIR = SCRIPT_DIR / CONFIG["paths"]["plots"]
+DATA_DIR = SCRIPT_DIR / CONFIG["paths"]["data"]
+N_LIMIT = CONFIG["api"]["returned_items_limit"]
 
 
 def save_station_ids(file_path: Path, station_ids: list[str]) -> None:
@@ -61,3 +64,37 @@ def extract_readings(readings: dict) -> dict:
         measures_data[measure].append((datetime_str, value))
 
     return dict(measures_data)
+
+
+def save_readings_to_csv(
+    readings: dict[str, list[tuple[str, float]]],
+    output_dir: Path,
+    station_id: str,
+    timestamp: str,
+) -> None:
+    """Save readings for each measure to a separate CSV file.
+
+    Args:
+        readings: Dictionary with measure types as keys and lists of (datetime_str, value) tuples as values
+        output_dir: Directory to save CSV files
+        station_id: ID of the station
+        timestamp: Timestamp string to include in filename
+    """
+    # Create output directory if it doesn't exist
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Save each measure's data to a separate CSV file
+    for measure, data in readings.items():
+        # Convert data to pandas DataFrame
+        df = pd.DataFrame(data, columns=["datetime", measure])
+
+        # Sort by datetime
+        df["datetime"] = pd.to_datetime(df["datetime"])
+        df = df.sort_values("datetime")
+
+        # Create filename
+        filename = f"station_{station_id}_{measure}_{timestamp}.csv"
+        filepath = output_dir / filename
+
+        # Save to CSV
+        df.to_csv(filepath, index=False)

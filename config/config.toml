@@ -5,3 +5,4 @@ returned_items_limit = 1400
 [paths]
 station_ids = "data/station_ids.txt"
 plots = "plots" 
+data = "data"
