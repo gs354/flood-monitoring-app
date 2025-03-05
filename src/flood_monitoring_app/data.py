@@ -1,9 +1,9 @@
 """Data handling functions and constants."""
 
+import csv
 from collections import defaultdict
 from pathlib import Path
 
-import pandas as pd
 import tomllib
 
 
@@ -85,16 +85,15 @@ def save_readings_to_csv(
 
     # Save each measure's data to a separate CSV file
     for measure, data in readings.items():
-        # Convert data to pandas DataFrame
-        df = pd.DataFrame(data, columns=["datetime", measure])
-
-        # Sort by datetime
-        df["datetime"] = pd.to_datetime(df["datetime"])
-        df = df.sort_values("datetime")
+        # Sort data by datetime
+        sorted_data = sorted(data, key=lambda x: x[0])
 
         # Create filename
         filename = f"station_{station_id}_{measure}_{timestamp}.csv"
         filepath = output_dir / filename
 
-        # Save to CSV
-        df.to_csv(filepath, index=False)
+        # Write to CSV
+        with open(filepath, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["datetime", measure])  # Header
+            writer.writerows(sorted_data)
