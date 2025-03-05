@@ -21,7 +21,7 @@ SAMPLE_API_RESPONSE = {
 }
 
 
-@pytest.mark.parametrize("dt", [1, 2, 7])
+@pytest.mark.parametrize("dt", [1, 7, 14])
 def test_get_station_readings(dt, monkeypatch):
     """Test API request construction with different time periods."""
     calls = []

@@ -45,6 +45,7 @@ flood-monitoring-app/
 
 The app uses a TOML configuration file located at `config/config.toml`, which contains:
 - API endpoint root URL
+- Limit on the number of items returned by the API
 - Paths for a station IDs text file and the directory for saving plot images
 
 
@@ -56,9 +57,11 @@ It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/st
 ### Options
 
 - `-s, --station-id`: ID of the monitoring station (required)
-- `-d, --days-back`: Number of days of data to fetch (default: 1)
+- `-d, --days-back`: Number of days of data to fetch (default: 1; allowed range: 1-14^*^)
 - `-u, --update-station-ids`: Update the station IDs file before processing
 - `-save, --save-not-display`: Save the plot instead of displaying it
+
+^*^ The limit on the number of items returned by the API is set in the config file to 1400. The corresponding number of days is set as one hundredth of this limit, i.e. 14. 
 
 ### On first use
 - Run with the `-u` flag to populate the station IDs file.
@@ -106,7 +109,7 @@ For development:
 
 ## Data Source
 
-This application uses data from the UK Environment Agency's real-time flood monitoring API. The API provides water level readings from monitoring stations across the UK.
+This application uses Environment Agency flood and river level data from the real-time data API (Beta)
 
 
     

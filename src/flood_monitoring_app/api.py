@@ -4,7 +4,10 @@ from datetime import datetime, timedelta
 
 import requests
 
-from .data import ROOT_URL
+from .data import ROOT_URL, load_config
+
+CONFIG = load_config()
+N_LIMIT = CONFIG["api"]["returned_items_limit"]
 
 
 def get_all_station_ids() -> list[str]:
@@ -26,6 +29,6 @@ def get_station_readings(station_id: str, dt: int = 1) -> dict:
     start_datetime = (datetime.now() - timedelta(days=dt)).strftime(
         "%Y-%m-%dT%H:%M:00Z"
     )
-    endpoint = f"{ROOT_URL}/{station_id}/readings?since={start_datetime}&_sorted"
+    endpoint = f"{ROOT_URL}/{station_id}/readings?since={start_datetime}&_sorted&_limit={N_LIMIT}"
     response = requests.get(endpoint)
     return response.json()

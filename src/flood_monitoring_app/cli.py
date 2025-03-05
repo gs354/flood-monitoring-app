@@ -7,11 +7,16 @@ from .data import (
     PLOTS_DIR,
     STATION_IDS_FILE,
     extract_readings,
+    load_config,
     load_station_ids,
     save_station_ids,
     validate_station_id,
 )
 from .plotting import plot_data
+
+CONFIG = load_config()
+N_LIMIT = CONFIG["api"]["returned_items_limit"]
+LOOKBACK_DAYS_LIMIT = int(N_LIMIT / 100)
 
 
 def main(
@@ -47,25 +52,29 @@ def main(
 def run_cli() -> None:
     """Run the command-line interface."""
 
-    def positive_int(value: str) -> int:
-        """Convert string to positive integer.
+    def int_in_range(value: str) -> int:
+        """Convert string to integer and check if it is in range [1, LOOKBACK_DAYS_LIMIT].
 
         Args:
-            value: String to convert
+            value: String to convert to integer
 
         Returns:
-            Positive integer
+            Integer between 1 and LOOKBACK_DAYS_LIMIT inclusive
 
         Raises:
-            ArgumentTypeError: If value cannot be converted to a positive integer
+            ArgumentTypeError: If value cannot be converted to int or is out of range
         """
         try:
             ivalue = int(value)
-            if ivalue <= 0:
-                raise ValueError
-            return ivalue
         except ValueError:
-            raise argparse.ArgumentTypeError(f"{value} is not a positive integer")
+            raise argparse.ArgumentTypeError(f"{value} is not a valid integer")
+
+        if not 1 <= ivalue <= LOOKBACK_DAYS_LIMIT:
+            raise argparse.ArgumentTypeError(
+                f"{value} is not in required range 1-{LOOKBACK_DAYS_LIMIT}"
+            )
+
+        return ivalue
 
     parser = argparse.ArgumentParser(
         description="Fetch and plot flood monitoring data for a given station."
@@ -80,9 +89,9 @@ def run_cli() -> None:
     parser.add_argument(
         "--days-back",
         "-d",
-        type=positive_int,
+        type=int_in_range,
         default=1,
-        help="Number of days to look back (must be positive)",
+        help=f"Number of days to look back (between 1 and {LOOKBACK_DAYS_LIMIT})",
     )
     parser.add_argument(
         "--update-station-ids",
