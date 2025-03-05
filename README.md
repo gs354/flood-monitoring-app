@@ -4,25 +4,26 @@ A Python application for fetching and visualising flood monitoring data from the
 
 ## Installation
 
-
+1. # Create and activate a virtual environment, e.g. on MacOs/Linux:
 ```bash
-# Create and activate a virtual environment, e.g. on MacOs/Linux:
 python3 -m venv .venv
 source .venv/bin/activate
+```
 
-# Clone and install the package
+2. Clone the package
+```bash
 git clone https://github.com/gs354/flood-monitoring-app.git
 cd flood-monitoring-app
 ```
 
-For users:
+3a. Install the package for users:
 ```bash
 pip install -e .
 ```
 
-For developers:
+3b. Install the package with development dependencies (required to run tests):
 ```bash
-pip install -e ".[dev]"  # Includes development dependencies. Required to run tests.
+pip install -e ".[dev]"
 ```
 
 ## Project Structure
