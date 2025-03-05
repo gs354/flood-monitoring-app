@@ -37,9 +37,11 @@ flood-monitoring-app/
 │   └── plotting.py     # Plotting functions
 ├── config/
 │   └── config.toml     # Configuration settings
-├── data/               # Generated data files
+├── data/               # Data files (e.g. station IDs)
 ├── plots/              # Generated plot files
-└── tests/              # Test files
+└── tests/              
+    ├── test_api.py     # API  tests
+    └── test_cli.py     # CLI tests
 ```
 
 ## Configuration
