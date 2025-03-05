@@ -107,6 +107,7 @@ pytest
 - Python 3.12+
 - matplotlib
 - requests
+- pandas
 
 For development:
 - pytest
