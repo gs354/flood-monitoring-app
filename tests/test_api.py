@@ -58,6 +58,7 @@ def test_get_request_json(monkeypatch: pytest.MonkeyPatch) -> None:
 
     assert len(calls) == 1
     assert calls[0] == endpoint
+    assert isinstance(result, dict)
     assert result == SAMPLE_API_RESPONSE
 
 

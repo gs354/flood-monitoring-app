@@ -57,11 +57,11 @@ It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/st
 ### Options
 
 - `-s, --station-id`: ID of the monitoring station (required)
-- `-d, --days-back`: Number of days of data to fetch (default: 1; allowed range: 1-14^*^)
+- `-d, --days-back`: Number of days of data to fetch (default: 1; allowed range: 1-14*)
 - `-u, --update-station-ids`: Update the station IDs file before processing
 - `-save, --save-not-display`: Save the plot instead of displaying it
 
-^*^ The limit on the number of items returned by the API is set in the config file to 1400. The corresponding number of days is set as one hundredth of this limit, i.e. 14. 
+* The limit on the number of items returned by the API is set in the config file to 1400. The corresponding number of days is set as one hundredth of this limit, i.e. 14. 
 
 ### On first use
 - Run with the `-u` flag to populate the station IDs file.
