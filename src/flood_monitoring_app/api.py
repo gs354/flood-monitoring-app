@@ -7,7 +7,7 @@ from .data import ROOT_URL
 
 def get_all_station_ids() -> list[str]:
     """Get all station IDs from the API."""
-    response = requests.get(f"{ROOT_URL}")
+    response = requests.get(ROOT_URL)
     return [item["@id"].split("/")[-1] for item in response.json()["items"]]
 
 
