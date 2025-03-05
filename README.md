@@ -37,14 +37,14 @@ flood-monitoring-app/
 │   └── plotting.py     # Plotting functions
 ├── config/
 │   └── config.toml     # Configuration settings
-├── data/               # Data files (e.g. station IDs)*
-├── plots/              # Generated plot files*
+├── data/               # Data files (e.g. station IDs) *
+├── plots/              # Generated plot files *
 └── tests/              
     ├── test_api.py     # API  tests
     └── test_cli.py     # CLI tests
 ```
 
-* The app will create the `data` and `plots` directories on first run.
+\* The app will create the `data` and `plots` directories on first run.
 
 ## Configuration
 
