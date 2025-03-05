@@ -10,7 +10,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-2. Clone the package
+2. Clone the package and move into the directory:
 ```bash
 git clone https://github.com/gs354/flood-monitoring-app.git
 cd flood-monitoring-app
@@ -62,7 +62,7 @@ It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/st
 - `-u, --update-station-ids`: Update the station IDs file before processing
 - `-save, --save-not-display`: Save the plot instead of displaying it
 
-<sup>*</sup> The limit on the number of items returned by the API is set in the config file to 1400. The corresponding number of days is set as one hundredth of this limit, i.e. 14. 
+\* The limit on the number of items returned by the API is set in the config file to 1400. The corresponding number of days is set as one hundredth of this limit, i.e. 14. 
 
 ### On first use
 - Run with the `-u` flag to populate the station IDs file.
