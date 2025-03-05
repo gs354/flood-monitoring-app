@@ -1,13 +1,8 @@
 """Functions for interacting with the flood monitoring API."""
 
-from datetime import datetime, timedelta
-
 import requests
 
-from .data import ROOT_URL, load_config
-
-CONFIG = load_config()
-N_LIMIT = CONFIG["api"]["returned_items_limit"]
+from .data import ROOT_URL
 
 
 def get_all_station_ids() -> list[str]:
@@ -16,19 +11,15 @@ def get_all_station_ids() -> list[str]:
     return [item["@id"].split("/")[-1] for item in response.json()["items"]]
 
 
-def get_station_readings(station_id: str, dt: int = 1) -> dict:
-    """Get readings from the API for a given station ID.
+def get_request_json(endpoint: str) -> dict:
+    """Get JSON response from the API for a given endpoint.
 
     Args:
-        station_id: ID of the monitoring station
-        dt: Number of days to look back. Defaults to 1.
+        endpoint: API endpoint
 
     Returns:
         dict: JSON response from the API
     """
-    start_datetime = (datetime.now() - timedelta(days=dt)).strftime(
-        "%Y-%m-%dT%H:%M:00Z"
-    )
-    endpoint = f"{ROOT_URL}/{station_id}/readings?since={start_datetime}&_sorted&_limit={N_LIMIT}"
+
     response = requests.get(endpoint)
     return response.json()

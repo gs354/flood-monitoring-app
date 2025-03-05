@@ -1,10 +1,12 @@
 """Command-line interface for flood monitoring."""
 
 import argparse
+from datetime import datetime, timedelta
 
-from .api import get_all_station_ids, get_station_readings
+from .api import get_all_station_ids, get_request_json
 from .data import (
     PLOTS_DIR,
+    ROOT_URL,
     STATION_IDS_FILE,
     extract_readings,
     load_config,
@@ -25,8 +27,8 @@ def main(
     update_station_ids: bool = False,
     save_fig: bool = True,
 ) -> None:
-    print(station_id, dt, update_station_ids, save_fig)
     """Main function to fetch and plot flood monitoring data."""
+
     if update_station_ids:
         station_ids = get_all_station_ids()
         save_station_ids(STATION_IDS_FILE, station_ids)
@@ -35,8 +37,15 @@ def main(
     valid_ids = load_station_ids()
     validate_station_id(station_id=station_id, valid_ids=valid_ids)
 
+    # Get start datetime for the request
+    time_now = datetime.now()
+    start_datetime = (time_now - timedelta(days=dt)).strftime("%Y-%m-%dT%H:%M:00Z")
+
+    # Get endpoint for the request
+    endpoint = f"{ROOT_URL}/{station_id}/readings?since={start_datetime}&_sorted&_limit={N_LIMIT}"
+
     # Get request to API for station readings
-    readings = get_station_readings(station_id=station_id, dt=dt)
+    readings = get_request_json(endpoint=endpoint)
 
     # Extract datetime and value pairs for each measure from the readings
     measures_data = extract_readings(readings=readings)
@@ -45,7 +54,8 @@ def main(
     plot_data(
         data=measures_data,
         savefig=save_fig,
-        savepath=PLOTS_DIR / f"station_{station_id}.pdf",
+        savepath=PLOTS_DIR
+        / f"station_{station_id}_{start_datetime[:16]}_{time_now.strftime('%Y-%m-%dT%H:%M')}.pdf",
     )
 
 
