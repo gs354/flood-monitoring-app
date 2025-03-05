@@ -37,12 +37,14 @@ flood-monitoring-app/
 │   └── plotting.py     # Plotting functions
 ├── config/
 │   └── config.toml     # Configuration settings
-├── data/               # Data files (e.g. station IDs)
-├── plots/              # Generated plot files
+├── data<sup>*</sup>/   # Data files (e.g. station IDs)
+├── plots<sup>*</sup>/  # Generated plot files
 └── tests/              
     ├── test_api.py     # API  tests
     └── test_cli.py     # CLI tests
 ```
+
+* The app will create the `data` and `plots` directories on first run.
 
 ## Configuration
 
@@ -68,7 +70,6 @@ It accesses the endpoint `https://environment.data.gov.uk/flood-monitoring/id/st
 
 ### On first use
 - Run with the `-u` flag to create a station IDs file in the `data` directory.
-- The app will create the `plots` and `data` directories if they don't exist.
 
 
 ### Examples
