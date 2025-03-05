@@ -40,14 +40,14 @@ def _setup_axis_labels(ax: Axes, measure: str, xlabel: str, rotation: int = 45) 
 def plot_data(
     data: dict[str, list[tuple[str, float]]],
     savefig: bool = False,
-    savepath: Path | None = None,
+    filepath: Path | None = None,
 ) -> None:
     """Plot each measure's readings on a separate subplot. Colour data by date.
 
     Args:
         data: Dictionary with measure types as keys and lists of (datetime_str, value) tuples as values
         savefig: Whether to save the figure to a file
-        savepath: Path where to save the figure if savefig is True
+        filepath: Path to save the figure if savefig is True
     """
     n_measures = len(data)
     fig, axes = plt.subplots(n_measures, 1, figsize=(10, 4 * n_measures))
@@ -79,10 +79,10 @@ def plot_data(
     plt.tight_layout()
 
     if savefig:
-        if isinstance(savepath, str):
-            savepath = Path(savepath)
-        savepath.parent.mkdir(parents=True, exist_ok=True)
-        plt.savefig(savepath, bbox_inches="tight")
+        if isinstance(filepath, str):
+            filepath = Path(filepath)
+        filepath.parent.mkdir(parents=True, exist_ok=True)
+        plt.savefig(filepath, bbox_inches="tight")
     else:
         plt.show()
 

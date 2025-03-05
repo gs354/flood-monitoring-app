@@ -1,3 +1,5 @@
+"""Tests for API functions."""
+
 import pytest
 import requests
 

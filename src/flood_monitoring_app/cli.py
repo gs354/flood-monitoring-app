@@ -1,4 +1,4 @@
-"""Command-line interface for flood monitoring."""
+"""Command-line interface for flood monitoring data retrieval and plotting."""
 
 import argparse
 from datetime import datetime, timedelta
@@ -54,37 +54,38 @@ def main(
     plot_data(
         data=measures_data,
         savefig=save_fig,
-        savepath=PLOTS_DIR
+        filepath=PLOTS_DIR
         / f"station_{station_id}_{start_datetime[:16]}_{time_now.strftime('%Y-%m-%dT%H:%M')}.pdf",
     )
 
 
+def int_in_range(value: str) -> int:
+    """Convert string to integer and check if it is in range [1, LOOKBACK_DAYS_LIMIT].
+
+    Args:
+        value: String to convert to integer
+
+    Returns:
+        Integer between 1 and LOOKBACK_DAYS_LIMIT inclusive
+
+    Raises:
+        ArgumentTypeError: If value cannot be converted to int or is out of range
+    """
+    try:
+        ivalue = int(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"{value} is not a valid integer")
+
+    if not 1 <= ivalue <= LOOKBACK_DAYS_LIMIT:
+        raise argparse.ArgumentTypeError(
+            f"{value} is not in required range 1-{LOOKBACK_DAYS_LIMIT}"
+        )
+
+    return ivalue
+
+
 def run_cli() -> None:
     """Run the command-line interface."""
-
-    def int_in_range(value: str) -> int:
-        """Convert string to integer and check if it is in range [1, LOOKBACK_DAYS_LIMIT].
-
-        Args:
-            value: String to convert to integer
-
-        Returns:
-            Integer between 1 and LOOKBACK_DAYS_LIMIT inclusive
-
-        Raises:
-            ArgumentTypeError: If value cannot be converted to int or is out of range
-        """
-        try:
-            ivalue = int(value)
-        except ValueError:
-            raise argparse.ArgumentTypeError(f"{value} is not a valid integer")
-
-        if not 1 <= ivalue <= LOOKBACK_DAYS_LIMIT:
-            raise argparse.ArgumentTypeError(
-                f"{value} is not in required range 1-{LOOKBACK_DAYS_LIMIT}"
-            )
-
-        return ivalue
 
     parser = argparse.ArgumentParser(
         description="Fetch and plot flood monitoring data for a given station."
