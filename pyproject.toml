@@ -9,6 +9,7 @@ description = "Environment Agency Real Time flood-monitoring Plotting App"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "fastapi[standard]>=0.115.11",
     "matplotlib>=3.10.1",
     "requests>=2.32.3",
 ]
@@ -21,6 +22,7 @@ dev = [
 
 [project.scripts]
 flood-monitor = "flood_monitoring_app.cli:run_cli"
+flood-monitor-server = "flood_monitoring_app.run_server:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -41,6 +41,7 @@ def plot_data(
     data: dict[str, list[tuple[str, float]]],
     savefig: bool = False,
     filepath: Path | None = None,
+    format: str = "pdf",
 ) -> None:
     """Plot each measure's readings on a separate subplot. Colour data by date.
 
@@ -49,44 +50,49 @@ def plot_data(
         savefig: Whether to save the figure to a file
         filepath: Path to save the figure if savefig is True
     """
-    n_measures = len(data)
-    fig, axes = plt.subplots(n_measures, 1, figsize=(10, 4 * n_measures))
+    try:
+        n_measures = len(data)
+        fig, axes = plt.subplots(n_measures, 1, figsize=(10, 4 * n_measures))
 
-    if n_measures == 1:
-        axes = [axes]
+        if n_measures == 1:
+            axes = [axes]
 
-    for (measure, readings), ax in zip(data.items(), axes):
-        # Sort readings chronologically
-        readings = sorted(
-            readings, key=lambda x: datetime.strptime(x[0], "%Y-%m-%dT%H:%M:%SZ")
-        )
+        for (measure, readings), ax in zip(data.items(), axes):
+            # Sort readings chronologically
+            readings = sorted(
+                readings, key=lambda x: datetime.strptime(x[0], "%Y-%m-%dT%H:%M:%SZ")
+            )
 
-        # Convert datetime strings to datetime objects
-        dates = [
-            datetime.strptime(reading[0], "%Y-%m-%dT%H:%M:%SZ") for reading in readings
-        ]
-        values = [reading[1] for reading in readings]
+            # Convert datetime strings to datetime objects
+            dates = [
+                datetime.strptime(reading[0], "%Y-%m-%dT%H:%M:%SZ")
+                for reading in readings
+            ]
+            values = [reading[1] for reading in readings]
 
-        # Get unique dates and choose plotting function
-        unique_dates = sorted(list(set(d.date() for d in dates)))
-        if len(unique_dates) > 2:
-            plot_multiday_data(ax, dates, values, measure)
-        else:
-            plot_up_to_one_day_of_data(ax, dates, values, measure, unique_dates)
+            # Get unique dates and choose plotting function
+            unique_dates = sorted(list(set(d.date() for d in dates)))
+            if len(unique_dates) > 2:
+                plot_multiday_data(ax, dates, values, measure)
+            else:
+                plot_up_to_one_day_of_data(ax, dates, values, measure, unique_dates)
 
-        ax.set_title(measure)
+            ax.set_title(measure)
 
-    plt.tight_layout()
-
-    if savefig:
-        if isinstance(filepath, str):
-            filepath = Path(filepath)
-        filepath.parent.mkdir(parents=True, exist_ok=True)
-        plt.savefig(filepath, bbox_inches="tight")
-    else:
-        plt.show()
-
-    plt.close(fig)
+        plt.tight_layout()
+        if savefig and filepath:
+            # Ensure directory exists
+            filepath.parent.mkdir(parents=True, exist_ok=True)
+            plt.savefig(filepath, format=format, bbox_inches="tight", dpi=300)
+            plt.close(fig)
+        elif not savefig:
+            plt.show()
+            plt.close(fig)
+    except Exception as e:
+        raise RuntimeError(f"Error plotting data: {str(e)}") from e
+    finally:
+        if fig is not None:
+            plt.close(fig)
 
 
 def plot_multiday_data(
