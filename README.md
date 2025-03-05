@@ -16,12 +16,12 @@ git clone https://github.com/gs354/flood-monitoring-app.git
 cd flood-monitoring-app
 ```
 
-3a. Install the package for users:
+3. Install the package for users (no development dependencies):
 ```bash
 pip install -e .
 ```
 
-3b. Install the package with development dependencies (required to run tests):
+4. Or install the package with development dependencies (required to run tests):
 ```bash
 pip install -e ".[dev]"
 ```
